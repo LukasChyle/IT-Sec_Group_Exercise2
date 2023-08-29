@@ -13,7 +13,7 @@ public class BruteForceController {
         return "password";
     }
 
-    @GetMapping("/dictionaryattack")
+    @GetMapping("/dictionary")
     public String getPassword2() {
         return "password";
     }

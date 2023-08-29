@@ -24,7 +24,7 @@ public class WebSecurityConfig {
         http.cors(withDefaults()).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests((requests) -> requests
                         .dispatcherTypeMatchers(DispatcherType.FORWARD,
                                 DispatcherType.ERROR).permitAll()
-                        .requestMatchers(antMatcher("/"),antMatcher( "/**")).authenticated())
+                        .requestMatchers(antMatcher("/userdata"),antMatcher( "/userdata/**")).authenticated())
                 .formLogin(withDefaults());
         return http.build();
     }
