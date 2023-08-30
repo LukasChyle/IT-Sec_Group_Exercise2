@@ -39,15 +39,6 @@ public class BruteForceController {
         log.info("Get password called");
 
 
-//   while (!Objects.equals(response, "http://localhost:9050/")) {
-//            for (int i = 150; i < 160; i++) {
-//                response = connecterToLogin.tryPasswords(String.valueOf(i));
-//                if (Objects.equals(response,"http://localhost:9050/")){
-//                    log.warn("Password cracked with password = " + i);
-//                }
-//            System.out.println(response);
-
-
         int length = 1;
         while (!Objects.equals(response, "http://localhost:9050/")) {
             passwordCracker.bruteForce(length);
