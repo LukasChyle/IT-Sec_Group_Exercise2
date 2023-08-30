@@ -15,6 +15,7 @@ public class PasswordMostCommon {
     ConnecterToLogin connecterToLogin;
 
     public String response;
+    public String password;
 
     @Autowired
     public PasswordMostCommon(ConnecterToLogin connecterToLogin) {
@@ -42,6 +43,7 @@ public class PasswordMostCommon {
             response = connecterToLogin.tryPasswords(password);
             if (response.equals("http://localhost:9050/")) {
                 log.info("Password found: " + password);
+                this.password = password;
                 break;
             }
         }

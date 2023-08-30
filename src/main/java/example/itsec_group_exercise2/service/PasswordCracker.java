@@ -12,6 +12,8 @@ public class PasswordCracker {
     private volatile boolean passwordFound = false;
     private long startTime;
 
+    public String password;
+
 
     @Autowired
     public PasswordCracker(ConnecterToLogin connecterToLogin) {
@@ -41,6 +43,7 @@ public class PasswordCracker {
                 long endTime = System.currentTimeMillis();
                 long elapsed = endTime - startTime;
                 passwordFound = true;
+                this.password = String.valueOf(current);
                 log.info("Password found: " + current);
                 log.info("Password found in: " + elapsed + " ms");
             }

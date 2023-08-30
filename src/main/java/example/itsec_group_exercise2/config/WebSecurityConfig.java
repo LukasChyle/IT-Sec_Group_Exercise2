@@ -25,7 +25,7 @@ public class WebSecurityConfig {
                         .dispatcherTypeMatchers(DispatcherType.FORWARD,
                                 DispatcherType.ERROR).permitAll()
                         .requestMatchers(antMatcher("/userdata"), antMatcher("/userdata/**")).authenticated()
-                        .requestMatchers(antMatcher("/bruteforce")).permitAll())
+                        .requestMatchers(antMatcher("/bruteforce"), antMatcher("/bruteforce/**")).permitAll())
 
                 .formLogin(withDefaults());
         return http.build();

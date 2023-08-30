@@ -35,8 +35,8 @@ public class BruteForceController {
 
     @GetMapping
     public String getPassword() throws IOException {
-        log.info("Get password called");
         String response = null;
+        log.info("Get password called");
 
 
 //   while (!Objects.equals(response, "http://localhost:9050/")) {
@@ -50,21 +50,21 @@ public class BruteForceController {
 
         int length = 1;
         while (!Objects.equals(response, "http://localhost:9050/")) {
-        passwordCracker.bruteForce(length);
-        response = passwordCracker.result;
-        length++;
+            passwordCracker.bruteForce(length);
+            response = passwordCracker.result;
+            length++;
         }
 
-//        passwordMostCommon.checkCommonPasswords(
-//                passwordMostCommon.processTxtFile(
-//                        passwordMostCommon.passwordsTxt));
-//
-
-        return response;
+        return response + " Password = " + passwordCracker.password;
     }
 
     @GetMapping("/dictionary")
-    public String getPassword2() {
-        return "password";
+    public String getPassword2() throws IOException {
+
+        passwordMostCommon.checkCommonPasswords(
+                passwordMostCommon.processTxtFile(
+                        passwordMostCommon.passwordsTxt));
+
+        return passwordMostCommon.response + " Password = " + passwordMostCommon.password;
     }
 }
