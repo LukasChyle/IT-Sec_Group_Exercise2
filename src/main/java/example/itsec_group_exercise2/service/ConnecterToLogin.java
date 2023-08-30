@@ -1,5 +1,6 @@
 package example.itsec_group_exercise2.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,6 +14,7 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 
 @Service
+@Slf4j
 public class ConnecterToLogin {
 
     private final WebClient webClient;
@@ -26,6 +28,7 @@ public class ConnecterToLogin {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         formData.add("username", "User");
         formData.add("password", password);
+        log.info("Trying password: " + password);
 
         return webClient.post()
                 .uri("/login")

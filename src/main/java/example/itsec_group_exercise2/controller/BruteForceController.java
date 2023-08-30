@@ -1,6 +1,7 @@
 package example.itsec_group_exercise2.controller;
 
 import example.itsec_group_exercise2.service.ConnecterToLogin;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/bruteforce")
+@Slf4j
 public class BruteForceController {
 
     ConnecterToLogin connecterToLogin;
@@ -21,15 +23,14 @@ public class BruteForceController {
 
     @GetMapping
     public String getPassword() {
-
+        log.info("Get password called");
         String response = null;
-
         while (!Objects.equals(response, "http://localhost:9050/")) {
-
-        System.out.println("connector called");
-            for (int i = 0; i < 160; i++) {
+            for (int i = 150; i < 160; i++) {
                 response = connecterToLogin.tryPasswords(String.valueOf(i));
-                System.out.println("test nr " + i);
+                if (Objects.equals(response,"http://localhost:9050/")){
+                    log.warn("Password cracked with password = " + i);
+                }
             }
         }
         return response;
