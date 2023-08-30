@@ -35,10 +35,10 @@ public class ConnecterToLogin {
                     if (response.statusCode().equals(HttpStatus.FOUND)) {
                         String location = response.headers().header("Location").get(0);
 
-                        return Mono.just("Redirecting to: " + location);
+                        return Mono.just(location);
                     }
-                    return Mono.just("Failed to authenticate");
+                    return Mono.just("Failed");
                 })
-                .block(Duration.ofSeconds(10));
+                .block(Duration.ofSeconds(3));
     }
 }
