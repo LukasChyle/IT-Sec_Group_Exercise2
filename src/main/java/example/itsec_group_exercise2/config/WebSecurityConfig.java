@@ -20,12 +20,21 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
-       
-        http.cors(withDefaults()).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests((requests) -> requests
+
+        http.authorizeHttpRequests((requests) -> requests
                         .dispatcherTypeMatchers(DispatcherType.FORWARD,
                                 DispatcherType.ERROR).permitAll()
-                        .requestMatchers(antMatcher("/userdata"),antMatcher( "/userdata/**")).authenticated())
-                .formLogin(withDefaults());
+                        .requestMatchers(antMatcher("/userdata"), antMatcher("/userdata/**")).authenticated()
+                        .requestMatchers(antMatcher("/bruteforce"), antMatcher("/bruteforce/**")).permitAll())
+                .formLogin(withDefaults())
+                .csrf(AbstractHttpConfigurer::disable);
+
+//        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest()
+//                        .authenticated())
+//                .httpBasic(withDefaults())
+//                .formLogin(withDefaults())
+//                .csrf(AbstractHttpConfigurer::disable);
+
         return http.build();
     }
 
