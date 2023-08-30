@@ -1,5 +1,7 @@
 package example.itsec_group_exercise2.controller;
 
+import example.itsec_group_exercise2.service.ConnecterToLogin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -18,13 +20,22 @@ import java.time.Duration;
 @RequestMapping("/bruteforce")
 public class BruteForceController {
 
+    ConnecterToLogin connecterToLogin;
+
+    @Autowired
+    public BruteForceController(ConnecterToLogin connecterToLogin) {
+        this.connecterToLogin = connecterToLogin;
+    }
 
     @GetMapping
     public String getPassword() {
 
 
 
-        return "password";
+        System.out.println("connector called");
+
+
+        return connecterToLogin.tryPasswords("159");
     }
 
     @GetMapping("/dictionary")
@@ -43,6 +54,8 @@ public class BruteForceController {
 
         return webClient.post()
                 .uri("/userdata")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(request), ClientRequest.class)
                 .retrieve()
                 .bodyToMono(ClientResponse.class)

@@ -20,11 +20,13 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
-       
+
         http.cors(withDefaults()).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests((requests) -> requests
                         .dispatcherTypeMatchers(DispatcherType.FORWARD,
                                 DispatcherType.ERROR).permitAll()
-                        .requestMatchers(antMatcher("/userdata"),antMatcher( "/userdata/**")).authenticated())
+                        .requestMatchers(antMatcher("/userdata"), antMatcher("/userdata/**")).authenticated()
+                        .requestMatchers(antMatcher("/bruteforce")).permitAll())
+
                 .formLogin(withDefaults());
         return http.build();
     }
