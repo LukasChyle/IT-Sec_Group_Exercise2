@@ -24,7 +24,7 @@ public class ConnecterToLogin {
 
     public String tryPasswords(String password) {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-        formData.add("username", "User");
+        formData.add("username", "user");
         formData.add("password", password);
 
         return webClient.post()
@@ -39,6 +39,6 @@ public class ConnecterToLogin {
                     }
                     return Mono.just("Failed");
                 })
-                .block(Duration.ofSeconds(3));
+                .block(Duration.ofSeconds(30));
     }
 }
