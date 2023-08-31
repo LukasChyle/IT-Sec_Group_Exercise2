@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 public class PasswordGenerator {
 
     ConnecterToLogin connecterToLogin;
+    private long startTime;
 
     @Autowired
     public PasswordGenerator(ConnecterToLogin connecterToLogin) {
@@ -24,11 +25,13 @@ public class PasswordGenerator {
 
     public String get() {
         tries = 0;
+        long endTime = System.currentTimeMillis();
+        long elapsed = endTime - startTime;
         for (int length = min; length < max; length++){
             generate("", 0, length);
             if (password != null) {
-                System.out.println("Password is [ " + password + " ] Tried " + tries + " combinations.");
-                return "Password is [ " + password + " ] Tried " + tries + " combinations.";
+                System.out.println("Password is [ " + password + " ] Tried " + tries + " combinations." + endTime);
+                return "Password is [ " + password + " ] Tried " + tries + " combinations. on time: " + endTime;
             }
         }
         System.out.println("Password was not found. Tried " + tries + " combinations.");
