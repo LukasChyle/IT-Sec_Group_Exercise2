@@ -16,32 +16,41 @@ public class PasswordGenerator {
         this.connecterToLogin = connecterToLogin;
     }
 
+    private int logCounter;
     private int tries;
     private String password;
-    private final int min = 1, max = 5; // Length of password to bruteforce
+    private final int min = 3, max = 5; // Length of password to bruteforce
 //    private final char[] charset = "0123456789".toCharArray();
-//    private final char[] charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-    private final char[] charset = ("abcdefghijklmnopqrstuvwxyzAEIOU0123456789!@#$%^&*()-_+=~`[]{}|:;<>,.?/BCDFGHJKLMNPQRSTVWXYZ").toCharArray();
+    private final char[] charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+//    private final char[] charset = ("abcdefghijklmnopqrstuvwxyzAEIOU0123456789!@#$%^&*()-_+=~`[]{}|:;<>,.?/BCDFGHJKLMNPQRSTVWXYZ").toCharArray();
 
     public String get() {
         tries = 0;
-        long endTime = System.currentTimeMillis();
-        long elapsed = endTime - startTime;
+        startTime = System.currentTimeMillis();
+        logCounter = 0;
+        password = null;
         for (int length = min; length < max; length++){
             generate("", 0, length);
             if (password != null) {
-                System.out.println("Password is [ " + password + " ] Tried " + tries + " combinations." + endTime);
-                return "Password is [ " + password + " ] Tried " + tries + " combinations. on time: " + endTime;
+                long endTime = System.currentTimeMillis();
+                double elapsed = (double) (endTime - startTime) /1000;
+                log.info("Password is [ " + password + " ] Tried " + tries + " combinations. on time: " + elapsed + " sec");
+                return "Password is [ " + password + " ] Tried " + tries + " combinations. on time: " + elapsed + " sec";
             }
         }
-        System.out.println("Password was not found. Tried " + tries + " combinations.");
+        log.info("Password was not found. Tried " + tries + " combinations.");
         return  "Password was not found. Tried " + tries + " combinations.";
     }
 
     private void generate(String str, int pos, int length) {
         if (length == 0) {
             tries++;
-            System.out.println(str);
+            logCounter++;
+            if (logCounter > 9999){
+                log.info("Current tries: " + tries);
+                logCounter = 0;
+            }
+
             String response = connecterToLogin.tryPasswords(str);
             if (response.equals("http://localhost:9050/")) {
                 password = str;

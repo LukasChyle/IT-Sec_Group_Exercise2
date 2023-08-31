@@ -28,7 +28,7 @@ public class ConnecterToLogin {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         formData.add("username", "user");
         formData.add("password", password);
-        log.info("Trying password: " + password);
+//        log.info("Trying password: " + password);
 
         return webClient.post()
                 .uri("/login")
