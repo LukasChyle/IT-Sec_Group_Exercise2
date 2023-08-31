@@ -1,12 +1,16 @@
 package example.itsec_group_exercise2.service;
 
-import org.springframework.stereotype.Controller;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@Controller
+@Slf4j
+@Service
 public class PasswordGenerator {
 
     ConnecterToLogin connecterToLogin;
 
+    @Autowired
     public PasswordGenerator(ConnecterToLogin connecterToLogin) {
         this.connecterToLogin = connecterToLogin;
     }
@@ -14,9 +18,9 @@ public class PasswordGenerator {
     private int tries;
     private String password;
     private final int min = 1, max = 5; // Length of password to bruteforce
-    private final char[] charset = "0123456789".toCharArray();
+//    private final char[] charset = "0123456789".toCharArray();
 //    private final char[] charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-//    private final char[] charset = ("abcdefghijklmnopqrstuvwxyzAEIOU0123456789!@#$%^&*()-_+=~`[]{}|:;<>,.?/BCDFGHJKLMNPQRSTVWXYZ").toCharArray();
+    private final char[] charset = ("abcdefghijklmnopqrstuvwxyzAEIOU0123456789!@#$%^&*()-_+=~`[]{}|:;<>,.?/BCDFGHJKLMNPQRSTVWXYZ").toCharArray();
 
     public String get() {
         tries = 0;

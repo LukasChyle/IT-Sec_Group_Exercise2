@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.Objects;
-
 
 @RestController
 @RequestMapping("/bruteforce")
@@ -22,21 +20,21 @@ public class BruteForceController {
     ConnecterToLogin connecterToLogin;
     PasswordCracker passwordCracker;
     PasswordMostCommon passwordMostCommon;
+    PasswordGenerator passwordGenerator;
+
 
     @Autowired
     public BruteForceController(ConnecterToLogin connecterToLogin, PasswordCracker passwordCracker,
-                                PasswordMostCommon passwordMostCommon) {
+                                PasswordMostCommon passwordMostCommon, PasswordGenerator passwordGenerator) {
         this.connecterToLogin = connecterToLogin;
         this.passwordCracker = passwordCracker;
         this.passwordMostCommon = passwordMostCommon;
+        this.passwordGenerator = passwordGenerator;
     }
 
     @GetMapping
     public String getPassword() {
-
-        PasswordGenerator generator = new PasswordGenerator(connecterToLogin);
-
-        return generator.get();
+        return passwordGenerator.get();
     }
 
     @GetMapping("/dictionary")
