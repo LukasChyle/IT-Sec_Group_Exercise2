@@ -22,6 +22,13 @@ public class PasswordMostCommon {
         this.connecterToLogin = connecterToLogin;
     }
 
+
+    public String tryMostCommonPasswords() throws IOException {
+        checkCommonPasswords(processTxtFile(passwordsTxt));
+        return response + " Password = " + password;
+    }
+
+
     public File passwordsTxt = new File("src/main/resources/passwords.txt");
 
     public List<String> processTxtFile(File file) throws IOException {

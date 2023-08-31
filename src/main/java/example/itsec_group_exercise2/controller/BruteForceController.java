@@ -41,11 +41,7 @@ public class BruteForceController {
 
     @GetMapping("/dictionary")
     public String getPassword2() throws IOException {
-
-        passwordMostCommon.checkCommonPasswords(
-                passwordMostCommon.processTxtFile(
-                        passwordMostCommon.passwordsTxt));
-
+        passwordMostCommon.tryMostCommonPasswords();
         return passwordMostCommon.response + " Password = " + passwordMostCommon.password;
     }
 }
